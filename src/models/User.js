@@ -16,20 +16,19 @@ const userSchema = new Schema({
         required: true,
         trim: true,
     },
-    email: {
+    login: {
         type: String,
-        required: true,
+        trim: true,
         unique: true,
         lowercase: true,
-        validate: (value) => {
-            if (!validator.isEmail(value)) {
-                throw new Error({ error: 'Invalid Email' });
-            }
-        },
+        required: true,
     },
     password: {
         type: String,
         required: true,
+    },
+    ikon: {
+        type: String,
     },
     tokens: [
         {
@@ -66,9 +65,9 @@ userSchema.methods.generateAuthToken = async function () {
     }
 };
 
-userSchema.statics.findByCredentials = async (email, password) => {
+userSchema.statics.findByCredentials = async (login, password) => {
     try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ login });
         if (!user) {
             throw new Error('invalid email or password');
         }
