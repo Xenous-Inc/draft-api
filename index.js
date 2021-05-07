@@ -2,12 +2,12 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import helmet from 'helmet';
-import notFound from './src/rest/middlewares/notFound';
-import errorHandler from './src/rest/middlewares/errorHandler';
-import usersRouter from './src/rest/routes/users';
-import authRouter from './src/rest/routes/auth';
-import { postsRouter } from './src/rest/routes/posts';
-import authMiddleware from './src/rest/middlewares/auth';
+import notFound from './src/middlewares/notFound';
+import errorHandler from './src/middlewares/errorHandler';
+import usersRouter from './src/routes/users';
+import authRouter from './src/routes/auth';
+import { postsRouter } from './src/routes/posts';
+import authMiddleware from './src/middlewares/auth';
 
 const app = express();
 
