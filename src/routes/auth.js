@@ -2,7 +2,6 @@ import express from 'express';
 import authController from '../controllers/auth';
 import authMiddleware from '../middlewares/auth';
 
-// eslint-disable-next-line new-cap
 const authRouter = express.Router();
 
 authRouter.post('/signup', authController.signUp);

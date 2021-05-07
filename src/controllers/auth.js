@@ -1,10 +1,10 @@
-import { asyncHandler } from '../middlewares/asyncHandler';
 import Boom from '@hapi/boom';
+import { asyncHandler } from '../middlewares/asyncHandler';
 import User from '../models/User';
 import { secureUserParams } from '../helpers';
 
 const signUp = asyncHandler(async (req, res, next) => {
-    const { email, password, name, lastName } = req.body;
+    const { login, password, name, lastName } = req.body;
     try {
         if (!name) {
             return next(Boom.badData('missing name'));
@@ -12,10 +12,10 @@ const signUp = asyncHandler(async (req, res, next) => {
         if (!lastName) {
             return next(Boom.badData('missing lastName'));
         }
-        if (!email || !password) {
-            return next(Boom.badData('missing email or password'));
+        if (!login || !password) {
+            return next(Boom.badData('missing login or password'));
         }
-        const newUser = new User({ email, password, name, lastName });
+        const newUser = new User({ login, password, name, lastName });
         await newUser.save();
         const token = await newUser.generateAuthToken();
         return res.status(200).json({ user: secureUserParams(newUser), token });
@@ -24,12 +24,12 @@ const signUp = asyncHandler(async (req, res, next) => {
     }
 });
 const login = asyncHandler(async (req, res, next) => {
-    const { email, password } = req.body;
+    const { login, password } = req.body;
     try {
-        if (!email || !password) {
+        if (!login || !password) {
             return next(Boom.badData('missing email or password'));
         }
-        const user = await User.findByCredentials(email, password);
+        const user = await User.findByCredentials(login, password);
         if (!user) {
             return next(Boom.unauthorized('invalid email or password'));
         }
