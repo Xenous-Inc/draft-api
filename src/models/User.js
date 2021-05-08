@@ -6,6 +6,10 @@ import jwt from 'jsonwebtoken';
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
+    accessCreateTests: {
+        type: Boolean,
+        default: false,
+    },
     isRegistered: {
         type: Boolean,
         default: false,

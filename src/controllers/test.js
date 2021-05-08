@@ -10,6 +10,8 @@ const createTest = asyncHandler(async (req, res, next) => {
     if (!title || !questions)
         return next(Boom.badData('missing title or questions'));
     if (!type) return next(Boom.badData('missing type'));
+    if (user.accessCreateTests === false)
+        return next(Boom.forbidden('you are not allowed to create test'));
 
     try {
         const newTest = new Test({
