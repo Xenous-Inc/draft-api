@@ -2,7 +2,7 @@ import Boom from '@hapi/boom';
 import validator from 'validator';
 import { asyncHandler } from '../middlewares/asyncHandler';
 import User from '../models/User';
-import { secureUserParams, sendPhoneVerify } from '../helpers';
+import { sendPhoneVerify } from '../helpers';
 
 const auth = asyncHandler(async (req, res, next) => {
     const { phone, code } = req.body;

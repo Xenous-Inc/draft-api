@@ -6,7 +6,7 @@ import notFound from './src/middlewares/notFound';
 import errorHandler from './src/middlewares/errorHandler';
 import authRouter from './src/routes/auth';
 import userRouter from './src/routes/user';
-import testController from './src/routes/test';
+import testRouter from './src/routes/test';
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
-app.use('/test', testController);
+app.use('/test', testRouter);
 
 app.get('/ping', (req, res) => {
     return res.status(200).json('pong');

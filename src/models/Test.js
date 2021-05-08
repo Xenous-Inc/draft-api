@@ -18,6 +18,7 @@ const testSchema = new Schema({
     author: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
+        required: true,
     },
     questions: [
         {
