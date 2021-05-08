@@ -30,7 +30,7 @@ const auth = asyncHandler(async (req, res, next) => {
         if (user && user.isRegistered && code) {
             if (user.lastConfirmPass === code) {
                 user.lastConfirmPass = '0000';
-                await user.save;
+                await user.save();
                 const token = await user.generateAuthToken();
                 return res.status(200).json({ token });
             }
@@ -41,7 +41,7 @@ const auth = asyncHandler(async (req, res, next) => {
             if (user.lastConfirmPass === code) {
                 user.isRegistered = true;
                 user.lastConfirmPass = '0000';
-                await user.save;
+                await user.save();
                 const token = await user.generateAuthToken();
                 return res.status(200).json({ token });
             }
@@ -58,22 +58,7 @@ const auth = asyncHandler(async (req, res, next) => {
         return next(Boom.badRequest(err.message));
     }
 });
-const login = asyncHandler(async (req, res, next) => {
-    const { login, password } = req.body;
-    try {
-        if (!login || !password) {
-            return next(Boom.badData('missing email or password'));
-        }
-        const user = await User.findByCredentials(login, password);
-        if (!user) {
-            return next(Boom.unauthorized('invalid email or password'));
-        }
-        const token = await user.generateAuthToken();
-        return res.status(200).json({ user: secureUserParams(user), token });
-    } catch (error) {
-        return next(Boom.unauthorized(error));
-    }
-});
+
 const logout = asyncHandler(async (req, res, next) => {
     try {
         req.user.tokens = req.user.tokens.filter(
@@ -85,6 +70,7 @@ const logout = asyncHandler(async (req, res, next) => {
         return next(Boom.internal(error));
     }
 });
+
 const logoutAll = asyncHandler(async (req, res, next) => {
     try {
         req.user.tokens.splice(0, req.user.tokens.length);
@@ -97,7 +83,6 @@ const logoutAll = asyncHandler(async (req, res, next) => {
 
 export default {
     auth,
-    login,
     logout,
     logoutAll,
 };

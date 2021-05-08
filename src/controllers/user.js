@@ -3,23 +3,43 @@ import { asyncHandler } from '../middlewares/asyncHandler';
 import User from '../models/User';
 
 const getUserInfo = asyncHandler(async (req, res, next) => {
-    const { login } = req.params;
+    const me = req.user;
+    const { phone } = req.params;
 
-    if (!login) {
-        return next(Boom.badData('missing login'));
+    if (!phone) {
+        return next(Boom.badData('missing phone'));
     }
 
     try {
-        const user = await User.findOne({ login });
+        if (phone === 'me') {
+            return res.status(200).json({
+                phone: me.phone,
+                ikon: me.ikon,
+                username: me.username,
+            });
+        }
+        const user = await User.findOne({ phone });
 
         if (!user) return next(Boom.badData('wrong user'));
 
         return res.status(200).json({
-            login: user.login,
-            name: user.name,
-            lastName: user.name,
             ikon: user.ikon,
+            username: user.ikon,
         });
+    } catch (err) {
+        return next(Boom.badRequest(err.message));
+    }
+});
+
+const changeUsername = asyncHandler(async (req, res, next) => {
+    const { user } = req;
+    const { username } = req.body;
+
+    try {
+        user.username = username;
+        await user.save();
+
+        return res.status(200).json({});
     } catch (err) {
         return next(Boom.badRequest(err.message));
     }
@@ -27,4 +47,5 @@ const getUserInfo = asyncHandler(async (req, res, next) => {
 
 export default {
     getUserInfo,
+    changeUsername,
 };

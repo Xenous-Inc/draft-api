@@ -11,7 +11,7 @@ export const secureUserParams = (user) => {
         likes,
         ...userFields
     } = user.toObject();
-    return userFields;
+    return userFields
 };
 
 export const sendPhoneVerify = async (phone) => {

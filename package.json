@@ -4,25 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node -r dotenv/config -r @babel/register app.js",
-    "watch": "nodemon --exec node -r dotenv/config -r @babel/register app.js",
-    "test": "mocha -r dotenv/config -r @babel/register -t 10000 --exit"
+    "start": "node -r dotenv/config -r esm app.js",
+    "watch": "nodemon --exec node -r dotenv/config -r esm app.js",
+    "test": "mocha -r dotenv/config -r esm -t 10000 --exit"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.1",
-    "@babel/node": "^7.10.5",
-    "@babel/polyfill": "^7.10.4",
-    "@babel/preset-env": "^7.11.0",
-    "@babel/register": "^7.11.5",
     "@hapi/boom": "^9.1.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "connect-mongo": "^3.2.0",
     "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
     "helmet": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
@@ -39,13 +34,13 @@
     "@types/supertest": "^2.0.10",
     "babel-loader": "^8.1.0",
     "chai": "^4.2.0",
-    "eslint": "^7.7.0",
+    "eslint": "^7.11.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-prettier": "^3.1.4",
     "mocha": "^8.1.1",
     "nodemon": "^2.0.4",
-    "prettier": "^2.0.5",
+    "prettier": "^2.2.1",
     "supertest": "^4.0.2"
   }
 }
