@@ -41,6 +41,24 @@ const getTest = asyncHandler(async (req, res, next) => {
     if (!testId) return next(Boom.badData('missing testId'));
 
     try {
+        if (testId === 'all') {
+            const tests = await Test.aggregate([
+                {
+                    $project: {
+                        testId: '$_id',
+                        _id: 0,
+                        title: 1,
+                        description: 1,
+                        author: 1,
+                        type: 1,
+                        questions: 1,
+                    },
+                },
+            ]);
+            await User.populate(tests, { path: 'author', select: 'phone -_id' });
+
+            return res.status(200).json({ tests });
+        }
         const test = await Test.findById(testId);
         if (!test) return next(Boom.badData('wrong test'));
 
@@ -50,31 +68,7 @@ const getTest = asyncHandler(async (req, res, next) => {
     }
 });
 
-const getAllTests = asyncHandler(async (req, res, next) => {
-    try {
-        const tests = await Test.aggregate([
-            {
-                $project: {
-                    testId: '$_id',
-                    _id: 0,
-                    title: 1,
-                    description: 1,
-                    author: 1,
-                    type: 1,
-                    questions: 1,
-                },
-            },
-        ]);
-        await User.populate(tests, { path: 'author', select: 'phone -_id' });
-
-        return res.status(200).json({ tests });
-    } catch (err) {
-        return next(Boom.badRequest(err.message));
-    }
-});
-
 export default {
     createTest,
-    getAllTests,
     getTest,
 };
