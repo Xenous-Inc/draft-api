@@ -7,6 +7,7 @@ import errorHandler from './src/middlewares/errorHandler';
 import authRouter from './src/routes/auth';
 import userRouter from './src/routes/user';
 import testRouter from './src/routes/test';
+import mapRouter from './src/routes/map';
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/test', testRouter);
+app.use('/map', mapRouter);
 
 app.get('/ping', (req, res) => {
     return res.status(200).json('pong');

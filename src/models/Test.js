@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const testSchema = new Schema({
     type: {
         type: String,
-        enum: ['country'],
+        enum: ['country', 'oil', 'city'],
     },
     title: {
         type: String,
