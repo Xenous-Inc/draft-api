@@ -43,7 +43,7 @@ const auth = asyncHandler(async (req, res, next) => {
                 user.lastConfirmPass = '0000';
                 await user.save();
                 const token = await user.generateAuthToken();
-                return res.status(200).json({ token });
+                return res.status(104).json({ token });
             }
             return next(Boom.badData('wrong code'));
         }

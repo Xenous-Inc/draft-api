@@ -4,6 +4,6 @@ import mapController from '../controllers/map';
 
 const mapRouter = express.Router();
 
-mapRouter.get('/get/title', authMiddleware, mapController.getTitleByCoords);
+mapRouter.get('/get/:title', authMiddleware, mapController.getTitleByCoords);
 
 export default mapRouter;
